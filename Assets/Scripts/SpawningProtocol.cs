@@ -250,12 +250,6 @@ public class SpawningProtocol : MonoBehaviour {
 		if (speed >= .2 && blockPlace % 20 == 0 && blockPlace != 0)
 						speed -= .1f;
 
-		//update the AI if applicable
-		if (gameObject.GetComponent<AI> ()) {
-			gameObject.GetComponent<AI> ().nextBlock = true;
-			gameObject.GetComponent<AI> ().blocks = new int[] {toSpawn [blockPlace], toSpawn [blockPlace + 1]};
-				}
-
 		//create the top, central block
 		GameObject blockA;
 		blockA = null;
@@ -307,6 +301,13 @@ public class SpawningProtocol : MonoBehaviour {
 			blockB.GetComponent<BasicBehaviour> ().partner = blockA;
 		}
 		blockPlace++;
+
+		//update the AI if applicable
+		if (gameObject.GetComponent<AI> ()) {
+			gameObject.GetComponent<AI> ().nextBlock = true;
+			gameObject.GetComponent<AI> ().blocks = new BasicBehaviour[] {blockA.GetComponent<BasicBehaviour>(), blockB.GetComponent<BasicBehaviour>()};
+		}
+
 	}
 
 

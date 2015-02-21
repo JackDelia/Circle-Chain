@@ -32,7 +32,7 @@ public class BasicBehaviour : MonoBehaviour {
 
 	//variables for AI
 	public float lastAIReact;
-	public string[] possibleMoves = new string[] {"left", "right", "turn", "", "down"};
+	public string[] possibleMoves = new string[] {"left", "right", "turn", "down"};
 
 	//used for animations
 	public Texture[] frames;
@@ -89,9 +89,17 @@ public class BasicBehaviour : MonoBehaviour {
 			else if(!p1 && !(spawningProtocol.multi)){
 				//INSERT AI HERE IF EVER
 				//For now set to mimic player exactly
-				if(Time.time-lastAIReact >= speed/2){	              
+
+				if(Time.time-lastAIReact >= speed/2){
+					if(spawningProtocol.gameObject.GetComponent<AI>().move == 4){
+						if((central && pos == 8) || (!central && pos == 14)){
+							spawningProtocol.gameObject.GetComponent<AI>().exec = true;
+						}
+						return;
+					}
+
 					InputMoves(possibleMoves[spawningProtocol.gameObject.GetComponent<AI>().move]); 
-					partner.GetComponent<BasicBehaviour>().InputMoves(possibleMoves[spawningProtocol.gameObject.GetComponent<AI>().move]);
+					//partner.GetComponent<BasicBehaviour>().InputMoves(possibleMoves[spawningProtocol.gameObject.GetComponent<AI>().move]);
 					lastAIReact = Time.time;
 					spawningProtocol.gameObject.GetComponent<AI>().exec = true;
 				}
@@ -104,6 +112,7 @@ public class BasicBehaviour : MonoBehaviour {
 	public void InputMoves(string button){
 		if(button.Equals("right")
 		   && pos%6 <5
+
 		   && spawningProtocol.spaces[pos+1]==null
 		   &&!(side == 3 && pos % 6 ==4)
 		   &&!(side == 3 && spawningProtocol.spaces[pos+2]!=null)
@@ -140,7 +149,23 @@ public class BasicBehaviour : MonoBehaviour {
 			}
 		}
 		else if(button.Equals("down")){
-			progress();
+			spawningProtocol.spaces[pos] = this;
+			spawningProtocol.spaces[partner.GetComponent<BasicBehaviour>().pos] = partner.GetComponent<BasicBehaviour>();
+			live = false;
+			side = 10;
+			partner.GetComponent<BasicBehaviour>().live = false;
+			logic ();
+			spawningProtocol.fallIn();
+			spawningProtocol.clearBlocks();
+			if(central){
+			if(!spawningProtocol.multi){
+				spawningProtocol.spawnNext();
+			}
+			else
+			{
+				spawningProtocol.gameObject.networkView.RPC("spawnNext",RPCMode.All);
+			}
+			}
 		}
 
 
