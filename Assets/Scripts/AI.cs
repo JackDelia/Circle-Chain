@@ -17,6 +17,8 @@ public class AI : MonoBehaviour {
 	public int maneuverposition;
 	public SpawningProtocol game;
 
+	public BasicBehaviour[] hypothetical;
+
 	//first is central
 	//0: red
 	//1: blue
@@ -81,19 +83,20 @@ public class AI : MonoBehaviour {
 		}
 
 	void selectManeuver(){
-		BasicBehaviour[] hypothetical;
+		//BasicBehaviour[] hypothetical;
 		int decision = 0;
 		int confidence = -10000;
 
 		for (int i = 0; i<22; i++) {
 			hypothetical = new BasicBehaviour[60];
 			for (int k = 0; k<hypothetical.Length; k++) {
-				hypothetical[i] = game.spaces[i];
+				hypothetical[k] = game.spaces[k];
 			}
 
 			int tempCon = 0;
-			if(losesGame(i))
+			if(losesGame(i)){
 				tempCon-=1000;
+			}
 
 
 			int posa = 0;
@@ -125,7 +128,7 @@ public class AI : MonoBehaviour {
 
 			tempCon += getChainVal(hypothetical);
 			tempCon -= getHeightVal(hypothetical);
-
+			//Debug.Log (i + ": " + tempCon);
 			if(tempCon > confidence){
 				decision = i;
 				confidence = tempCon;
@@ -138,6 +141,7 @@ public class AI : MonoBehaviour {
 	bool losesGame(int man){
 		if (game.spaces [12] && game.spaces [13] && game.spaces [14] && game.spaces [15]
 						&& game.spaces [16] && game.spaces [17]) {
+			Debug.Log("Despair");
 			return false;
 				}
 		bool loss = false;
@@ -146,67 +150,126 @@ public class AI : MonoBehaviour {
 				}
 
 		if (game.spaces [12]) {
-			loss = (man == 0 || man == 6);
+			return (man == 0 || man == 6);
 		}
 		
 		if (game.spaces [7]) {
-			loss = (man == 1 || man == 7 || man == 12 || man == 13 || man == 17 || man == 18);
+			return (man == 1 || man == 7 || man == 12 || man == 13 || man == 17 || man == 18);
 		}
 
 		if (game.spaces [13]) {
-			loss = (man == 1 || man == 7);
+			return (man == 1 || man == 7);
 		}
 
 		if (game.spaces [8]) {
-			loss = (man == 2 || man == 8 || man == 13 || man == 14 || man == 18 || man == 19);
+			return (man == 2 || man == 8 || man == 13 || man == 14 || man == 18 || man == 19);
 		}
 
-		if (game.spaces [14]) {
-			loss = (man == 2 || man == 8);
+		if (game.spaces [14] || game.spaces[20] || game.spaces[26]) {
+			return (man == 2 || man == 8);
 		}
 
 		if (game.spaces [9]) {
-			loss = (man == 3 || man == 9 || man == 14 || man == 15 || man == 19 || man == 20);
+			return (man == 3 || man == 9 || man == 14 || man == 15 || man == 19 || man == 20);
 		}
 
 		if (game.spaces [15]) {
-			loss = (man == 3 || man == 9);
+			return (man == 3 || man == 9);
 		}
 
 		if (game.spaces [10]) {
-			loss = (man == 4 || man == 10 || man == 15 || man == 116 || man == 20 || man == 21);
+			return (man == 4 || man == 10 || man == 15 || man == 116 || man == 20 || man == 21);
 		}
 
 		if (game.spaces [16]) {
-			loss = (man == 4 || man == 10);
+			return (man == 4 || man == 10);
 		}
 
 		if (game.spaces [11]) {
-			loss = (man == 5 || man == 11 || man == 16 || man == 21);
+			return (man == 5 || man == 11 || man == 16 || man == 21);
 		}
 
 		if (game.spaces [17]) {
-			loss = (man == 5 || man == 11);
+			return (man == 5 || man == 11);
 		}
-		if (loss)
-						Debug.Log ("Nope ");
 		return loss;
 	}
 
 	int getChainVal(BasicBehaviour[] hyp){
-		return 2;
+		int ret = 0;
+
+		ArrayList inCluster = new ArrayList ();
+		for (int i= 47; i>=0; i--) {
+						if (hyp [i] != null && hyp [i].color != "n") {
+								inCluster.AddRange (clearBlocks (hyp, inCluster, hyp [i]));
+								inCluster = prune (inCluster);
+						}
+			if(inCluster.Count >=4){
+				ret += 10;
+			}
+			else if(inCluster.Count == 3)
+			        ret+= 4;        
+			else if(inCluster.Count ==2)
+				ret+= 1;
+				
 		}
+		return ret;
+		}
+
+	//recursive helper method for clearing blocks
+	//here repurposed to find optimal block placement
+	ArrayList clearBlocks(BasicBehaviour[] spaces, ArrayList inCluster, BasicBehaviour b){
+		inCluster.Add(b.pos);
+
+		if (b.pos-6 >=0 && spaces [b.pos - 6] != null && spaces [b.pos - 6].color.Equals (b.color) 
+		    && !(inCluster == null) && !inCluster.Contains (b.pos - 6)) {
+			
+			inCluster.AddRange(clearBlocks(spaces, inCluster,spaces[b.pos-6]));
+		}
+		
+		if (spaces [b.pos + 6] != null && spaces [b.pos + 6].color.Equals (b.color) 
+		    && !(inCluster == null) && !inCluster.Contains (b.pos + 6)) {
+			inCluster.AddRange(clearBlocks(spaces, inCluster,spaces[b.pos+6]));
+		}
+		
+		if (spaces [b.pos - 1] != null && spaces [b.pos - 1].color.Equals (b.color) 
+		    && !inCluster.Contains (b.pos - 1) && b.pos % 6 != 0) {
+			
+			inCluster.AddRange(clearBlocks(spaces, inCluster,spaces[b.pos-1]));
+		}
+		
+		if (spaces [b.pos + 1] != null && spaces [b.pos + 1].color.Equals (b.color) 
+		    && !inCluster.Contains (b.pos + 1) && b.pos % 6 != 5) {
+			
+			inCluster.AddRange(clearBlocks(spaces , inCluster,spaces[b.pos+1]));
+		}
+		
+		return prune (inCluster);
+	}
+	
+	//gets rid of repeated numbers
+	ArrayList prune(ArrayList toPrune){
+		ArrayList ret = new ArrayList ();
+		foreach (int a in toPrune)
+			if (!ret.Contains (a))
+				ret.Add (a);
+		return ret;
+	}
+
 
 	int getHeightVal(BasicBehaviour[] hyp){
 		int ret = 0;
-		for(int i = 18; i <= 23; i++){
+		for(int i = 24; i <= 29; i++){
 			if(hyp[i])
 				ret++;
 			if(hyp[i-6])
-				ret += 5;
+				ret += 3;
 			if(hyp[i-12])
-				ret += 8;
+				ret += 6;
+			if(hyp[i-18])
+				ret+=10;
 		}
 		return ret;
 	}
+
 }

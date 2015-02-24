@@ -535,6 +535,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: 0
+  exec: 0
+  nextBlock: 0
+  currentManeuver: 0
+  maneuverposition: 0
+  game: {fileID: 0}
+  blocks: []
 --- !u!1 &1334398190
 GameObject:
   m_ObjectHideFlags: 0
