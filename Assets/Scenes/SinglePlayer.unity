@@ -98,7 +98,7 @@ AudioSource:
   m_GameObject: {fileID: 174568837}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 38835c4fe8d1e7d40901353668107891, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 38c51ffc4607b4b47b357e133b1a80ce, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -318,7 +318,7 @@ AudioSource:
   m_GameObject: {fileID: 1204798434}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 4ad79eefe4c83ac4f81c31d8529e6bed, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e8687d17970382d41a216d922a2daf3a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -540,6 +540,7 @@ MonoBehaviour:
   currentManeuver: 0
   maneuverposition: 0
   game: {fileID: 0}
+  hypothetical: []
   blocks: []
 --- !u!1 &1334398190
 GameObject:

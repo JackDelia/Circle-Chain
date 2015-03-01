@@ -182,7 +182,7 @@ AudioSource:
   m_GameObject: {fileID: 195540346}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 4ad79eefe4c83ac4f81c31d8529e6bed, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e8687d17970382d41a216d922a2daf3a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -275,6 +275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SFX: {fileID: 755104637}
   BGM: {fileID: 195540347}
+  score: 0
+  scoreDisplay: {fileID: 0}
   options: {fileID: 0}
   blockPlace: 0
   toSpawn: 
@@ -368,7 +370,7 @@ AudioSource:
   m_GameObject: {fileID: 755104636}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 38835c4fe8d1e7d40901353668107891, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 38c51ffc4607b4b47b357e133b1a80ce, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -653,6 +655,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SFX: {fileID: 755104637}
   BGM: {fileID: 195540347}
+  score: 0
+  scoreDisplay: {fileID: 0}
   options: {fileID: 0}
   blockPlace: 0
   toSpawn: 
