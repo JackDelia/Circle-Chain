@@ -1,0 +1,120 @@
+﻿Circle Chain
+A Game For Various Mobile Devices
+Copyright 2015 Jack Delia
+
+
+INTRO
+
+
+This game will be used in order to help enhance my skills in this medium. To that effect, it will be a basic game modeled after the Puyo Puyo series. The end result will be that both my skills will increase, and a relatively entertaining game will be created as a result.
+
+
+
+
+I. GENERAL INFORMATION
+The game itself is a falling block game that appears quite similar to Tetris at first glance. However, the in practice the game only feels a little bit like Tetris to play and the strategy involved is entirely different. It is also a multiplayer game, allowing for a feeling of competition as opposed to Tetris’s single player, as players attempt to clear blocks to hinder the opponent as quickly as possible while avoiding the blocks stacking up causing a loss.
+
+
+The game is based around getting sets of at least four of the same color touching, at which point they disappear and the opponent is hindered by the appearance of junk blocks. The player loses when the blocks reach the top of the screen. Over time, the blocks will speed up causing this to become more of a possibility.
+
+
+II. DETAILED GAME DESCRIPTION
+
+
+The objective of the game will be to outlast your opponent, whether human or AI.
+
+
+Gameplay
+
+
+The Basics:
+The game will start on a menu screen, at which point the player will choose to start versus a human, start versus an AI, or change the audio/graphical/difficulty settings. The game itself has each player in a rectangular playing area and blocks fall down in pairs of randomly generated colors. The blocks will snap to different hidden sort of columns when moved left to right by the player. When four or more of the same colored block are touching, the blocks will disappear, the player will get points, and the opponent will have a number of useless blocks fall on their side in random columns. The remaining blocks then fall into place such that there are no longer any blocks floating in mid-air.
+
+
+Chains:
+Though merely having four blocks of the same color touching is enough to get some points and send a few blocks over to the opponents side, a major part of the game is something known as a chain. When a player makes a set of blocks disappear, the blocks fall in as if by gravity. It is then possible for another set of four of the same color to be touching, which in turn causes them to disappear in the same fashion. This is known as a chain, and it multiplies the number of points gained and junk blocks sent over to the opponent. See the table below for more details:
+
+
+
+
+Chain
+	Junk Blocks
+	None
+	½ of blocks cleared
+	1
+	2X blocks cleared
+	2
+	3X blocks cleared
+	3
+	4X blocks cleared
+	
+
+ 
+Junk Blocks:
+Junk blocks are blocks that have no real color. They are dropped in random columns when the opponent clears blocks out. They are removed when a colored block next to them is cleared. Clearing a useless block does not earn points or send more useless blocks to the opponent.
+
+
+Note On Randomness:
+In order to make the game as fair as possible, the sequence of blocks will be pre-generated so that both players will get the same blocks in the same order throughout the game. Additionally, the useless blocks will not fall two in the same column at the same time unless every column has a useless block already falling in it.
+
+
+Sound/Music:
+There will be basic background music that plays throughout playtime, with a sound effect whenever a player completes a chain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UI Mock-Up:
+  
+
+
+
+
+
+1: Player 1 Playing Area
+2: Player 2 Playing Area
+3: Next Block
+4: (The black blocks) Useless Blocks.
+5: Score
+
+
+
+
+
+
+III. OTHER ASPECTS OF THE PRODUCT DESIGN
+
+
+The controls will be left and right to move the blocks, up to rotate, and down to make the blocks fall faster.
+
+
+The music will most likely be just generally basic background music and the graphics will be pretty basic.
+
+
+- END -
