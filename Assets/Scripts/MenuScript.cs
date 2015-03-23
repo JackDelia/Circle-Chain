@@ -7,6 +7,7 @@ public class MenuScript : MonoBehaviour {
 
 	public void start(){
 		Application.LoadLevel ("SinglePlayer");
+		Screen.orientation = ScreenOrientation.LandscapeLeft;
 		}
 	public void ScoreAttack(){
 		Application.LoadLevel ("ScoreAttack");

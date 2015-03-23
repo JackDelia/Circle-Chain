@@ -9,6 +9,10 @@ public class BasicBehaviour : MonoBehaviour {
 	//The non-central block rotates around the central one
 	public bool central;
 
+	public int controll = -1;
+	public Vector3 startControll;
+	public bool execute;
+
 	//how long it's been since it fell last
 	public float lastProgress;
 	//how fast it falls in seconds per space
@@ -62,6 +66,20 @@ public class BasicBehaviour : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetMouseButtonDown (0)) {
+			startControll = Input.mousePosition;
+			controll = 0;
+				}
+		if (Input.mousePosition.x < startControll.x - 10f) {
+			controll = 1;
+				}
+		if (Input.mousePosition.x > startControll.x + 10f) {
+			controll = 2;
+		}
+		if (Input.mousePosition.y < startControll.y - 25f) {
+			controll = 3;
+		}
+
 		if (!live && partner)
 						partner.GetComponent<BasicBehaviour> ().live = false;
 		//reads button press if still live
@@ -70,20 +88,27 @@ public class BasicBehaviour : MonoBehaviour {
 			if(Time.time-lastProgress >= speed){
 				progress();
 			}
-			if(Input.GetButtonDown("Fire2") && p1){
+			if(Input.GetMouseButtonUp(0)){
+			
+				if(controll == 2 && p1){
 				InputMoves("right");
 			}
 			
-			else if(Input.GetButtonDown("Fire1")&& p1){
+			
+				else if(controll == 1 && p1){
 
 				InputMoves( "left");
 			}
-			else if(Input.GetButtonDown("Fire3")&& p1){
+			
+				else if(controll == 0 && p1){
 
 				InputMoves("turn");
 			}
-			else if(Input.GetButtonDown("Jump") && p1){
+			
+				else if(controll == 3 && p1){
 				InputMoves ("down");
+			
+				}
 			}
 
 			else if(!p1 && !(spawningProtocol.multi)){
@@ -157,7 +182,7 @@ public class BasicBehaviour : MonoBehaviour {
 			logic ();
 			spawningProtocol.fallIn();
 			spawningProtocol.clearBlocks();
-			if(central){
+			if(!central){
 			if(!spawningProtocol.multi){
 				spawningProtocol.spawnNext();
 			}

@@ -16,6 +16,7 @@ public class AI : MonoBehaviour {
 	public int currentManeuver;
 	public int maneuverposition;
 	public SpawningProtocol game;
+	public float timer= Time.time;
 
 	public BasicBehaviour[] hypothetical;
 
@@ -38,22 +39,22 @@ public class AI : MonoBehaviour {
 			new int[] {1,3},
 			new int[] {1,1,3},
 			new int[] {1,1,1,3},
-			new int[] {4,2,2,0,0,3},
-			new int[] {4,2,2,0,3},
-			new int[] {4,2,2,3},
-			new int[] {4,2,2,1,3},
-			new int[] {4,2,2,1,1,3},
-			new int[] {4,2,2,1,1,1,3},
+			new int[] {2,2,0,0,3},
+			new int[] {2,2,0,3},
+			new int[] {2,2,3},
+			new int[] {2,2,1,3},
+			new int[] {2,2,1,1,3},
+			new int[] {2,2,1,1,1,3},
 			new int[] {2,0,0,3},
 			new int[] {2,0,3},
 			new int[] {2,3},
 			new int[] {2,1,3},
 			new int[] {2,1,1,3},
-			new int[] {4,2,2,2,0,3},
-			new int[] {4,2,2,2,3},
-			new int[] {4,2,2,2,1,3},
-			new int[] {4,2,2,2,1,1,3},
-			new int[] {4,2,2,2,1,1,1,3}};
+			new int[] {2,2,2,0,3},
+			new int[] {2,2,2,3},
+			new int[] {2,2,2,1,3},
+			new int[] {2,2,2,1,1,3},
+			new int[] {2,2,2,1,1,1,3}};
 		nextBlock = true;
 		maneuverposition = 0;
 		selectManeuver ();
@@ -66,6 +67,7 @@ public class AI : MonoBehaviour {
 			move = getBestMove ();
 			exec = false;
 				}
+		timer = Time.time;
 
 	}
 
@@ -211,6 +213,8 @@ public class AI : MonoBehaviour {
 			        ret+= 4;        
 			else if(inCluster.Count ==2)
 				ret+= 1;
+			if(Time.time-timer>.5f)
+				break;
 				
 		}
 		return ret;
@@ -222,24 +226,24 @@ public class AI : MonoBehaviour {
 		inCluster.Add(b.pos);
 
 		if (b.pos-6 >=0 && spaces [b.pos - 6] != null && spaces [b.pos - 6].color.Equals (b.color) 
-		    && !(inCluster == null) && !inCluster.Contains (b.pos - 6)) {
+		    && !(inCluster == null) && !inCluster.Contains (b.pos - 6) && Time.time - timer > .5) {
 			
 			inCluster.AddRange(clearBlocks(spaces, inCluster,spaces[b.pos-6]));
 		}
 		
 		if (spaces [b.pos + 6] != null && spaces [b.pos + 6].color.Equals (b.color) 
-		    && !(inCluster == null) && !inCluster.Contains (b.pos + 6)) {
+		    && !(inCluster == null) && !inCluster.Contains (b.pos + 6) && Time.time - timer > .5) {
 			inCluster.AddRange(clearBlocks(spaces, inCluster,spaces[b.pos+6]));
 		}
 		
 		if (spaces [b.pos - 1] != null && spaces [b.pos - 1].color.Equals (b.color) 
-		    && !inCluster.Contains (b.pos - 1) && b.pos % 6 != 0) {
+		    && !inCluster.Contains (b.pos - 1) && b.pos % 6 != 0 && Time.time - timer > .5) {
 			
 			inCluster.AddRange(clearBlocks(spaces, inCluster,spaces[b.pos-1]));
 		}
 		
 		if (spaces [b.pos + 1] != null && spaces [b.pos + 1].color.Equals (b.color) 
-		    && !inCluster.Contains (b.pos + 1) && b.pos % 6 != 5) {
+		    && !inCluster.Contains (b.pos + 1) && b.pos % 6 != 5 && Time.time - timer > .5) {
 			
 			inCluster.AddRange(clearBlocks(spaces , inCluster,spaces[b.pos+1]));
 		}

@@ -256,7 +256,7 @@ public class SpawningProtocol : MonoBehaviour {
 		if (multi) {
 			if(p1){
 			blockA = Network.Instantiate (spawnable [toSpawn [blockPlace]], transform.position, transform.rotation,0) as GameObject;
-			blockA.GetComponent<BasicBehaviour> ().central = true;
+			//blockA.GetComponent<BasicBehaviour> ().central = true;
 			blockA.GetComponent<BasicBehaviour> ().spawningProtocol = this;
 			blockA.GetComponent<BasicBehaviour> ().pos = 2;
 			blockA.GetComponent<BasicBehaviour> ().side = 2;
@@ -266,7 +266,7 @@ public class SpawningProtocol : MonoBehaviour {
 				} 
 		else {
 			blockA = Instantiate (spawnable [toSpawn [blockPlace]], transform.position, transform.rotation) as GameObject;	
-			blockA.GetComponent<BasicBehaviour> ().central = true;
+			//blockA.GetComponent<BasicBehaviour> ().central = true;
 			blockA.GetComponent<BasicBehaviour> ().spawningProtocol = this;
 			blockA.GetComponent<BasicBehaviour> ().pos = 2;
 			blockA.GetComponent<BasicBehaviour> ().side = 2;
@@ -300,6 +300,7 @@ public class SpawningProtocol : MonoBehaviour {
 			blockA.GetComponent<BasicBehaviour> ().partner = blockB;
 			blockB.GetComponent<BasicBehaviour> ().partner = blockA;
 		}
+		blockB.GetComponent<BasicBehaviour> ().central = true;
 		blockPlace++;
 
 		//update the AI if applicable

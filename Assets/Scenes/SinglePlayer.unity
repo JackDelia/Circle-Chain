@@ -540,6 +540,7 @@ MonoBehaviour:
   currentManeuver: 0
   maneuverposition: 0
   game: {fileID: 0}
+  timer: 0
   hypothetical: []
   blocks: []
 --- !u!1 &1334398190

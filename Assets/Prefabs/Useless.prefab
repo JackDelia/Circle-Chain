@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 191056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10000.5195, y: -.239999995, z: 0}
-  m_LocalScale: {x: 1100, y: 1100, z: 1}
+  m_LocalScale: {x: 147, y: 147, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,6 +43,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   live: 0
   central: 0
+  touchDir: -1
+  touchStartPos: {x: 0, y: 0}
   lastProgress: 0
   speed: 1
   step: 198
@@ -93,8 +95,8 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 8fa53e2cdcd4eaa478d01e27c76a23af, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
