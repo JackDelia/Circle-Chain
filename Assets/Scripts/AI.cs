@@ -18,7 +18,7 @@ public class AI : MonoBehaviour {
 	public SpawningProtocol game;
 	public float timer= Time.time;
 
-	public BasicBehaviour[] hypothetical;
+	public BlockController[] hypothetical;
 
 	//first is central
 	//0: red
@@ -26,7 +26,7 @@ public class AI : MonoBehaviour {
 	//2: green
 	//3: yellow
 	//4: purple
-	public BasicBehaviour[] blocks;
+	public BlockController[] blocks;
 
 
 	void Start(){
@@ -85,12 +85,12 @@ public class AI : MonoBehaviour {
 		}
 
 	void selectManeuver(){
-		//BasicBehaviour[] hypothetical;
+		//BlockController[] hypothetical;
 		int decision = 0;
 		int confidence = -10000;
 
 		for (int i = 0; i<22; i++) {
-			hypothetical = new BasicBehaviour[60];
+			hypothetical = new BlockController[60];
 			for (int k = 0; k<hypothetical.Length; k++) {
 				hypothetical[k] = game.spaces[k];
 			}
@@ -197,7 +197,7 @@ public class AI : MonoBehaviour {
 		return loss;
 	}
 
-	int getChainVal(BasicBehaviour[] hyp){
+	int getChainVal(BlockController[] hyp){
 		int ret = 0;
 
 		ArrayList inCluster = new ArrayList ();
@@ -222,7 +222,7 @@ public class AI : MonoBehaviour {
 
 	//recursive helper method for clearing blocks
 	//here repurposed to find optimal block placement
-	ArrayList clearBlocks(BasicBehaviour[] spaces, ArrayList inCluster, BasicBehaviour b){
+	ArrayList clearBlocks(BlockController[] spaces, ArrayList inCluster, BlockController b){
 		inCluster.Add(b.pos);
 
 		if (b.pos-6 >=0 && spaces [b.pos - 6] != null && spaces [b.pos - 6].color.Equals (b.color) 
@@ -261,7 +261,7 @@ public class AI : MonoBehaviour {
 	}
 
 
-	int getHeightVal(BasicBehaviour[] hyp){
+	int getHeightVal(BlockController[] hyp){
 		int ret = 0;
 		for(int i = 24; i <= 29; i++){
 			if(hyp[i])

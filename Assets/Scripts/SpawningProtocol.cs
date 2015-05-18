@@ -25,10 +25,10 @@ public class SpawningProtocol : MonoBehaviour {
 	//Where all the not live blocks are
 	//game numbers each space 0-47 left to right, top to bottom
 	//8 rows, six columns
-	public BasicBehaviour[] spaces;
+	public BlockController[] spaces;
 
 	//the blocks in the "next" box
-	public BasicBehaviour[] displayed;
+	public BlockController[] displayed;
 
 	//used to clear blocks
 	public bool checkAgain;
@@ -80,9 +80,9 @@ public class SpawningProtocol : MonoBehaviour {
 
 		//initialize instance variables
 		combo = 1;
-		displayed = new BasicBehaviour[2];
+		displayed = new BlockController[2];
 		checkAgain = false;
-		spaces = new BasicBehaviour[60];
+		spaces = new BlockController[60];
 		for (int i = 0; i<spaces.Length; i++) {
 			spaces[i] = null;
 				}
@@ -196,10 +196,10 @@ public class SpawningProtocol : MonoBehaviour {
 				else{
 					blockA = Instantiate (spawnable [5], apos, transform.rotation) as GameObject;		
 				}
-				blockA.GetComponent<BasicBehaviour> ().central = true;
-				blockA.GetComponent<BasicBehaviour> ().spawningProtocol = this;
-				blockA.GetComponent<BasicBehaviour> ().pos = i;
-				spaces[i]= blockA.GetComponent<BasicBehaviour>();
+				blockA.GetComponent<BlockController> ().central = true;
+				blockA.GetComponent<BlockController> ().spawningProtocol = this;
+				blockA.GetComponent<BlockController> ().pos = i;
+				spaces[i]= blockA.GetComponent<BlockController>();
 				fallIn();
 
 						} 
@@ -222,10 +222,10 @@ public class SpawningProtocol : MonoBehaviour {
 			else{
 				blockA = Instantiate (spawnable [5], apos, transform.rotation) as GameObject;		
 			}		
-			blockA.GetComponent<BasicBehaviour> ().central = true;
-			blockA.GetComponent<BasicBehaviour> ().spawningProtocol = this;
-			blockA.GetComponent<BasicBehaviour> ().pos = column;
-			spaces[column]= blockA.GetComponent<BasicBehaviour>();	
+			blockA.GetComponent<BlockController> ().central = true;
+			blockA.GetComponent<BlockController> ().spawningProtocol = this;
+			blockA.GetComponent<BlockController> ().pos = column;
+			spaces[column]= blockA.GetComponent<BlockController>();	
 			fallIn();
 
 		}
@@ -255,23 +255,14 @@ public class SpawningProtocol : MonoBehaviour {
 		blockA = null;
 		if (multi) {
 			if(p1){
-			blockA = Network.Instantiate (spawnable [toSpawn [blockPlace]], transform.position, transform.rotation,0) as GameObject;
-			//blockA.GetComponent<BasicBehaviour> ().central = true;
-			blockA.GetComponent<BasicBehaviour> ().spawningProtocol = this;
-			blockA.GetComponent<BasicBehaviour> ().pos = 2;
-			blockA.GetComponent<BasicBehaviour> ().side = 2;
-			blockA.GetComponent<BasicBehaviour> ().live = true;
-			blockA.GetComponent<BasicBehaviour> ().speed = speed;
+			
+				blockA = Network.Instantiate (spawnable [toSpawn [blockPlace]], transform.position, transform.rotation,0) as GameObject;
+				blockA.GetComponent<BlockController>().SetUp(this, 2,2,true,speed);
 			}
 				} 
 		else {
 			blockA = Instantiate (spawnable [toSpawn [blockPlace]], transform.position, transform.rotation) as GameObject;	
-			//blockA.GetComponent<BasicBehaviour> ().central = true;
-			blockA.GetComponent<BasicBehaviour> ().spawningProtocol = this;
-			blockA.GetComponent<BasicBehaviour> ().pos = 2;
-			blockA.GetComponent<BasicBehaviour> ().side = 2;
-			blockA.GetComponent<BasicBehaviour> ().live = true;
-			blockA.GetComponent<BasicBehaviour> ().speed = speed;
+			blockA.GetComponent<BlockController>().SetUp(this, 2,2,true,speed);
 				}
 		blockPlace++;
 
@@ -283,30 +274,24 @@ public class SpawningProtocol : MonoBehaviour {
 		if (multi) {
 			if(p1){
 			blockB = Network.Instantiate (spawnable [toSpawn [blockPlace]], bpos, transform.rotation,0) as GameObject;
-			blockB.GetComponent<BasicBehaviour> ().spawningProtocol = this;
-			blockB.GetComponent<BasicBehaviour> ().pos = 8;
-			blockB.GetComponent<BasicBehaviour> ().live = true;
-			blockB.GetComponent<BasicBehaviour> ().speed = speed;
-				blockA.GetComponent<BasicBehaviour> ().partner = blockB;
-				blockB.GetComponent<BasicBehaviour> ().partner = blockA;
+				blockB.GetComponent<BlockController>().SetUp(this,8,2,true,speed);
+				blockA.GetComponent<BlockController> ().partner = blockB;
+				blockB.GetComponent<BlockController> ().partner = blockA;
 			}
 		} 
 		else {
 			blockB = Instantiate (spawnable [toSpawn [blockPlace]], bpos, transform.rotation) as GameObject;
-			blockB.GetComponent<BasicBehaviour> ().spawningProtocol = this;
-			blockB.GetComponent<BasicBehaviour> ().pos = 8;
-			blockB.GetComponent<BasicBehaviour> ().live = true;
-			blockB.GetComponent<BasicBehaviour> ().speed = speed;	
-			blockA.GetComponent<BasicBehaviour> ().partner = blockB;
-			blockB.GetComponent<BasicBehaviour> ().partner = blockA;
+			blockB.GetComponent<BlockController>().SetUp(this,8,2,true,speed);
+			blockA.GetComponent<BlockController> ().partner = blockB;
+			blockB.GetComponent<BlockController> ().partner = blockA;
 		}
-		blockB.GetComponent<BasicBehaviour> ().central = true;
+		blockB.GetComponent<BlockController> ().central = true;
 		blockPlace++;
 
 		//update the AI if applicable
 		if (gameObject.GetComponent<AI> ()) {
 			gameObject.GetComponent<AI> ().nextBlock = true;
-			gameObject.GetComponent<AI> ().blocks = new BasicBehaviour[] {blockA.GetComponent<BasicBehaviour>(), blockB.GetComponent<BasicBehaviour>()};
+			gameObject.GetComponent<AI> ().blocks = new BlockController[] {blockA.GetComponent<BlockController>(), blockB.GetComponent<BlockController>()};
 		}
 
 	}
@@ -331,7 +316,7 @@ public class SpawningProtocol : MonoBehaviour {
 		else {
 			blockA = Instantiate (spawnable [toSpawn [blockPlace + 2]], apos, transform.rotation) as GameObject;
 				}
-		displayed [0] = blockA.GetComponent<BasicBehaviour> ();
+		displayed [0] = blockA.GetComponent<BlockController> ();
 
 		Vector3 bpos = transform.position;
 		bpos.x += 1056;
@@ -343,7 +328,7 @@ public class SpawningProtocol : MonoBehaviour {
 		else{
 			blockB = Instantiate(spawnable[toSpawn[blockPlace+3]], bpos, transform.rotation) as GameObject;
 		}
-		displayed [1] = blockB.GetComponent<BasicBehaviour> ();
+		displayed [1] = blockB.GetComponent<BlockController> ();
 
 	}
 
@@ -415,7 +400,7 @@ public class SpawningProtocol : MonoBehaviour {
 
 
 	//recursive helper method for clearing blocks
-	 ArrayList clearBlocks(ArrayList inCluster, BasicBehaviour b){
+	 ArrayList clearBlocks(ArrayList inCluster, BlockController b){
 		inCluster.Add(b.pos);
 		if (spaces [b.pos - 6] != null && spaces [b.pos - 6].color.Equals (b.color) 
 		    && !(inCluster == null) && !inCluster.Contains (b.pos - 6)) {

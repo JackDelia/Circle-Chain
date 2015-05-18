@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasicBehaviour : MonoBehaviour {
+public class BlockController : MonoBehaviour {
 
 	//whether the block is still active (not grounded)
 	public bool live = false;
@@ -64,6 +64,14 @@ public class BasicBehaviour : MonoBehaviour {
 			p1 = spawningProtocol.p1;
 	}
 
+	public void SetUp(SpawningProtocol p, int pos, int side, bool live, float speed){
+		spawningProtocol = p;
+		this.pos = pos;
+		this.side = side;
+		this.live = live;
+		this.speed = speed;
+		}
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown (0)) {
@@ -81,7 +89,7 @@ public class BasicBehaviour : MonoBehaviour {
 		}
 
 		if (!live && partner)
-						partner.GetComponent<BasicBehaviour> ().live = false;
+						partner.GetComponent<BlockController> ().live = false;
 		//reads button press if still live
 		if (live) {
 			//drops the block down if it's time to
@@ -124,7 +132,7 @@ public class BasicBehaviour : MonoBehaviour {
 					}
 
 					InputMoves(possibleMoves[spawningProtocol.gameObject.GetComponent<AI>().move]); 
-					//partner.GetComponent<BasicBehaviour>().InputMoves(possibleMoves[spawningProtocol.gameObject.GetComponent<AI>().move]);
+					//partner.GetComponent<BlockController>().InputMoves(possibleMoves[spawningProtocol.gameObject.GetComponent<AI>().move]);
 					lastAIReact = Time.time;
 					spawningProtocol.gameObject.GetComponent<AI>().exec = true;
 				}
@@ -175,10 +183,10 @@ public class BasicBehaviour : MonoBehaviour {
 		}
 		else if(button.Equals("down")){
 			spawningProtocol.spaces[pos] = this;
-			spawningProtocol.spaces[partner.GetComponent<BasicBehaviour>().pos] = partner.GetComponent<BasicBehaviour>();
+			spawningProtocol.spaces[partner.GetComponent<BlockController>().pos] = partner.GetComponent<BlockController>();
 			live = false;
 			side = 10;
-			partner.GetComponent<BasicBehaviour>().live = false;
+			partner.GetComponent<BlockController>().live = false;
 			logic ();
 			spawningProtocol.fallIn();
 			spawningProtocol.clearBlocks();
@@ -216,15 +224,15 @@ public class BasicBehaviour : MonoBehaviour {
 	//drops the block down one, performs necessary checks
 	//if at the bottom, calls for a new block to be spawned
 	public void progress(){
-		if(live &&(pos>=42 || partner.GetComponent<BasicBehaviour>().pos>=42
+		if(live &&(pos>=42 || partner.GetComponent<BlockController>().pos>=42
 		   || spawningProtocol.spaces[pos+6] != null 
-		   || spawningProtocol.spaces[partner.GetComponent<BasicBehaviour>().pos+6] !=null)){
+		   || spawningProtocol.spaces[partner.GetComponent<BlockController>().pos+6] !=null)){
 
 			spawningProtocol.spaces[pos] = this;
-			spawningProtocol.spaces[partner.GetComponent<BasicBehaviour>().pos] = partner.GetComponent<BasicBehaviour>();
+			spawningProtocol.spaces[partner.GetComponent<BlockController>().pos] = partner.GetComponent<BlockController>();
 			live = false;
 			side = 10;
-			partner.GetComponent<BasicBehaviour>().live = false;
+			partner.GetComponent<BlockController>().live = false;
 			logic ();
 			spawningProtocol.fallIn();
 			spawningProtocol.clearBlocks();
